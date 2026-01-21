@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { ExerciseDay } from '$lib/types';
+	import type { LastTrainedDay } from '$lib/utils/rotation';
 
 	interface Props {
-		lastTrainedDays: ExerciseDay[];
+		lastTrainedDays: LastTrainedDay[];
 	}
 
 	let { lastTrainedDays }: Props = $props();
@@ -37,14 +37,19 @@
 	<div class="last-days">
 		<span class="last-days-label">Letzte:</span>
 		<div class="day-badges">
-			{#each lastTrainedDays as day}
-				<span
-					class="day-badge"
-					style="background: {getCategoryColor(day.category)}"
-					title={day.name}
+			{#each lastTrainedDays as { exerciseDay, daysAgo }}
+				<div
+					class="day-badge-wrapper"
+					title="{exerciseDay.name} - vor {daysAgo} {daysAgo === 1 ? 'Tag' : 'Tagen'}"
 				>
-					{getCategoryBadge(day.category)}
-				</span>
+					<span
+						class="day-badge"
+						style="background: {getCategoryColor(exerciseDay.category)}"
+					>
+						{getCategoryBadge(exerciseDay.category)}
+					</span>
+					<span class="days-ago">{daysAgo}d</span>
+				</div>
 			{/each}
 			{#if lastTrainedDays.length === 0}
 				<span class="no-data">-</span>
@@ -99,7 +104,14 @@
 
 	.day-badges {
 		display: flex;
-		gap: 0.25rem;
+		gap: 0.5rem;
+	}
+
+	.day-badge-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.125rem;
 	}
 
 	.day-badge {
@@ -112,6 +124,12 @@
 		font-size: 0.75rem;
 		font-weight: 700;
 		color: white;
+	}
+
+	.days-ago {
+		font-size: 0.625rem;
+		color: var(--color-text-muted);
+		font-weight: 500;
 	}
 
 	.no-data {

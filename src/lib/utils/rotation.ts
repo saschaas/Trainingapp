@@ -50,6 +50,11 @@ export function getExerciseDayForCategory(
 	return matching.sort((a, b) => a.rotationOrder - b.rotationOrder)[0];
 }
 
+export interface LastTrainedDay {
+	exerciseDay: ExerciseDay;
+	daysAgo: number;
+}
+
 /**
  * Get the last N exercise days that were trained (for header display)
  */
@@ -57,10 +62,11 @@ export function getLastTrainedDays(
 	trainings: Training[],
 	exerciseDays: ExerciseDay[],
 	count: number
-): ExerciseDay[] {
+): LastTrainedDay[] {
 	const dayMap = new Map(exerciseDays.map(d => [d.id!, d]));
-	const result: ExerciseDay[] = [];
+	const result: LastTrainedDay[] = [];
 	const seen = new Set<number>();
+	const now = Date.now();
 
 	// Trainings should already be sorted by date descending
 	for (const training of trainings) {
@@ -70,7 +76,8 @@ export function getLastTrainedDays(
 		if (!seen.has(dayId)) {
 			const day = dayMap.get(dayId);
 			if (day) {
-				result.push(day);
+				const daysAgo = Math.floor((now - training.date) / (1000 * 60 * 60 * 24));
+				result.push({ exerciseDay: day, daysAgo });
 				seen.add(dayId);
 			}
 		}

@@ -1,16 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, Filler } from 'chart.js';
-	import type { Training } from '$lib/types';
+	import type { Training, TimeRange } from '$lib/types';
 	import { exerciseDaysById } from '$lib/stores/exerciseDays';
 	import { get } from 'svelte/store';
+	import TimeRangeSelector from '$lib/components/shared/TimeRangeSelector.svelte';
 
 	interface Props {
 		trainings: Training[];
 		limit?: number;
+		showTimeRange?: boolean;
 	}
 
-	let { trainings, limit = 20 }: Props = $props();
+	let { trainings, limit = 20, showTimeRange = false }: Props = $props();
+
+	let timeRange: TimeRange = $state(30);
+	let effectiveLimit = $derived(showTimeRange ? timeRange : limit);
 
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
@@ -38,12 +43,16 @@
 		}
 	}
 
+	function handleTimeRangeChange(newRange: TimeRange) {
+		timeRange = newRange;
+	}
+
 	$effect(() => {
 		if (!canvas) return;
 
 		const recentTrainings = [...trainings]
 			.sort((a, b) => a.date - b.date)
-			.slice(-limit);
+			.slice(-effectiveLimit);
 
 		const labels = recentTrainings.map(t => formatDate(t.date));
 		const data = recentTrainings.map(t => t.totalVolume);
@@ -126,12 +135,30 @@
 </script>
 
 <div class="chart-container">
-	<canvas bind:this={canvas}></canvas>
+	{#if showTimeRange}
+		<div class="chart-header">
+			<TimeRangeSelector value={timeRange} onchange={handleTimeRangeChange} />
+		</div>
+	{/if}
+	<div class="canvas-wrapper">
+		<canvas bind:this={canvas}></canvas>
+	</div>
 </div>
 
 <style>
 	.chart-container {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.chart-header {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.canvas-wrapper {
 		height: 250px;
 	}
 </style>

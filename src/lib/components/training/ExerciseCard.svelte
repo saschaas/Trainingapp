@@ -17,6 +17,7 @@
 		onFillLast: (lastSets: SetData[]) => void;
 		cardIndex: number;
 		isLastCard: boolean;
+		nextExerciseFirstInputId?: string;
 	}
 
 	let {
@@ -29,7 +30,8 @@
 		onFillFirst,
 		onFillLast,
 		cardIndex,
-		isLastCard
+		isLastCard,
+		nextExerciseFirstInputId
 	}: Props = $props();
 
 	// Calculate averages from past trainings
@@ -63,8 +65,8 @@
 		if (setIndex < totalSets - 1) {
 			return getInputId(exercise.id!, sets[setIndex + 1].setNumber, 'weight');
 		}
-		// First set of next exercise (handled by parent)
-		return undefined;
+		// First set of next exercise
+		return nextExerciseFirstInputId;
 	}
 </script>
 

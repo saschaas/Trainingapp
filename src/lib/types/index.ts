@@ -97,3 +97,44 @@ export interface SetAverage {
 	avgReps: number;
 	count: number;
 }
+
+// For enhanced statistics
+export interface ProgressTrend {
+	exerciseId: number;
+	exerciseName: string;
+	trend: 'improving' | 'stable' | 'declining';
+	percentageChange: number;
+	lastPRDate: number | null;
+	sessionCount: number;
+}
+
+export interface ExerciseVolumeBreakdown {
+	exerciseId: number;
+	exerciseName: string;
+	category: ExerciseCategory;
+	totalVolume: number;
+	percentage: number;
+}
+
+export interface ExerciseDayVolumeData {
+	date: number;
+	volume: number;
+	prCount: number;
+}
+
+export interface SetProgressionData {
+	date: number;
+	weight: number;
+	reps: number;
+	volume: number;
+}
+
+export interface NextSessionRecommendation {
+	exerciseDay: ExerciseDay | null;
+	focusExercises: Array<{ exerciseId: number; exerciseName: string; reason: string }>;
+	reason: string;
+}
+
+export type StatsTabId = 'overview' | 'exercise-days' | 'exercises';
+
+export type TimeRange = 10 | 30 | 90;

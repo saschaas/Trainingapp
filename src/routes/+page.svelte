@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import Header from '$lib/components/layout/Header.svelte';
 	import TabNavigation from '$lib/components/layout/TabNavigation.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
@@ -78,6 +79,10 @@
 	});
 
 	function handleTabChange(tab: TabId) {
+		if (tab === 'statistics') {
+			goto('/statistics');
+			return;
+		}
 		ui.setActiveTab(tab);
 	}
 
@@ -122,6 +127,10 @@
 	function getExerciseSets(exerciseId: number): SetData[] {
 		return currentTraining.getSetsForExercise($currentTraining, exerciseId);
 	}
+
+	function getFirstInputIdForExercise(exerciseId: number): string {
+		return `input-${exerciseId}-1-weight`;
+	}
 </script>
 
 <svelte:head>
@@ -133,12 +142,7 @@
 <TabNavigation activeTab={$ui.activeTab} onTabChange={handleTabChange} />
 
 <main class="main-content">
-	{#if $ui.activeTab === 'statistics'}
-		<div class="statistics-placeholder">
-			<p>Statistiken</p>
-			<a href="/statistics">Zur Statistik-Seite</a>
-		</div>
-	{:else if !initialized}
+	{#if !initialized}
 		<div class="loading">
 			<p>Lädt...</p>
 		</div>
@@ -148,9 +152,11 @@
 			<a href="/config/exercise-days">Trainingstag erstellen</a>
 		</div>
 	{:else}
+		{@const sortedExercises = currentExerciseDay()!.exercises.sort((a, b) => a.position - b.position)}
 		<div class="exercises-list">
-			{#each currentExerciseDay()!.exercises.sort((a, b) => a.position - b.position) as config, index}
+			{#each sortedExercises as config, index}
 				{@const exercise = $exercisesById.get(config.exerciseId)}
+				{@const nextConfig = sortedExercises[index + 1]}
 				{#if exercise}
 					<ExerciseCard
 						{exercise}
@@ -162,7 +168,8 @@
 						onFillFirst={() => handleFillFirst(config.exerciseId)}
 						onFillLast={(lastSets) => handleFillLast(config.exerciseId, lastSets)}
 						cardIndex={index}
-						isLastCard={index === currentExerciseDay()!.exercises.length - 1}
+						isLastCard={index === sortedExercises.length - 1}
+						nextExerciseFirstInputId={nextConfig ? getFirstInputIdForExercise(nextConfig.exerciseId) : undefined}
 					/>
 				{/if}
 			{/each}
@@ -178,7 +185,7 @@
 	{/if}
 </main>
 
-{#if $ui.activeTab !== 'statistics' && currentExerciseDay()}
+{#if currentExerciseDay()}
 	<Footer
 		onSave={() => showSaveConfirm = true}
 		onReset={() => showResetConfirm = true}
@@ -240,8 +247,7 @@
 	}
 
 	.empty-state,
-	.loading,
-	.statistics-placeholder {
+	.loading {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -252,8 +258,7 @@
 		color: var(--color-text-secondary);
 	}
 
-	.empty-state a,
-	.statistics-placeholder a {
+	.empty-state a {
 		color: var(--color-primary);
 		text-decoration: underline;
 	}
