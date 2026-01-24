@@ -1,4 +1,25 @@
-import type { ExerciseDay, Training } from '$lib/types';
+import type { ExerciseDay, ExerciseDayCategory, Training } from '$lib/types';
+
+// The fixed rotation cycle
+const CATEGORY_CYCLE: ExerciseDayCategory[] = ['push', 'pull', 'legs'];
+
+/**
+ * Get the next category in the PUSH → PULL → LEGS rotation
+ */
+export function getNextCategory(lastCategory: ExerciseDayCategory | null): ExerciseDayCategory {
+	if (!lastCategory) {
+		return 'push';
+	}
+
+	const currentIndex = CATEGORY_CYCLE.indexOf(lastCategory);
+	if (currentIndex === -1) {
+		// Unknown category (e.g., full-body), default to push
+		return 'push';
+	}
+
+	const nextIndex = (currentIndex + 1) % CATEGORY_CYCLE.length;
+	return CATEGORY_CYCLE[nextIndex];
+}
 
 /**
  * Get the next exercise day in rotation

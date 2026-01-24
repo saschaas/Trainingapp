@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+Color-Code the volume per excercise:
+can you add an indication to the excercise input, in the part where the user inputs his training weights and repetitions during the training, below is the indication of his volume in KG that is calculated when the user Inputs values. Can you Color this volume indication based on his last excercise for this excercise-day as follows:
+- green: if current volume is more than last time;
+- blue: if the current volume is equal to last time
+- Keep the Color if no Input
+--> TODO
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+Historie Layout Change:
+For the Historie tab displaying the last Workouts, can you make this use the avaialbale space better (see: Screenshot.jpg). Try to fit th Information that is displayed in the popup in the space n the row. This should be easily possible. But make sure it is inutitive for the user to understand and fits the design pattern. 
+-->DONE
+---------------------------------------------------------------------------
+

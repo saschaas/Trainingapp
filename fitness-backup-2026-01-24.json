@@ -1,0 +1,893 @@
+{
+  "version": 1,
+  "exportDate": 1769266231774,
+  "exercises": [
+    {
+      "name": "Bankdrücken",
+      "category": "Brust",
+      "focus": "Brust-komplett",
+      "createdAt": 1768983389704,
+      "updatedAt": 1768983389704,
+      "id": 1
+    },
+    {
+      "name": "Schrägbankdrücken",
+      "category": "Brust",
+      "focus": "Obere Brust",
+      "createdAt": 1768983416071,
+      "updatedAt": 1768983416071,
+      "id": 2
+    },
+    {
+      "name": "Flys",
+      "category": "Brust",
+      "focus": "Innere Brust",
+      "createdAt": 1768983441571,
+      "updatedAt": 1768983441571,
+      "id": 3
+    },
+    {
+      "name": "Schulterdrücken",
+      "category": "Schulter",
+      "focus": "Schulter-komplett",
+      "createdAt": 1768983460138,
+      "updatedAt": 1768983460138,
+      "id": 4
+    },
+    {
+      "name": "Seitheben",
+      "category": "Schulter",
+      "focus": "Seitliche Schulter",
+      "createdAt": 1768983479671,
+      "updatedAt": 1768983479671,
+      "id": 5
+    },
+    {
+      "name": "Trizepsdrücken",
+      "category": "Trizeps",
+      "focus": "Langer Kopf",
+      "createdAt": 1768983515671,
+      "updatedAt": 1768983515671,
+      "id": 6
+    },
+    {
+      "name": "Stirnpush",
+      "category": "Trizeps",
+      "focus": "Trizeps-komplett",
+      "createdAt": 1768983547305,
+      "updatedAt": 1768983547305,
+      "id": 7
+    },
+    {
+      "name": "Crunches",
+      "category": "Bauch",
+      "focus": "Core",
+      "createdAt": 1768983562838,
+      "updatedAt": 1768983562838,
+      "id": 8
+    },
+    {
+      "name": "Latziehen (breit)",
+      "category": "Rücken",
+      "focus": "Lat",
+      "createdAt": 1768983578871,
+      "updatedAt": 1768983578871,
+      "id": 9
+    },
+    {
+      "name": "Latziehen (eng)",
+      "category": "Rücken",
+      "focus": "Trapez",
+      "createdAt": 1768983633871,
+      "updatedAt": 1768983633871,
+      "id": 10
+    },
+    {
+      "name": "Rudern",
+      "category": "Schulter",
+      "focus": "Hintere Schulter",
+      "createdAt": 1768983673605,
+      "updatedAt": 1768983673605,
+      "id": 11
+    },
+    {
+      "name": "Facepulls",
+      "category": "Schulter",
+      "focus": "Hintere Schulter",
+      "createdAt": 1768983689838,
+      "updatedAt": 1768983689838,
+      "id": 12
+    },
+    {
+      "name": "Cable Curls",
+      "category": "Bizeps",
+      "focus": "Brachialis",
+      "createdAt": 1768983734538,
+      "updatedAt": 1768983734538,
+      "id": 13
+    },
+    {
+      "name": "Hammer Curls",
+      "category": "Bizeps",
+      "focus": "Langer Kopf",
+      "createdAt": 1768983761705,
+      "updatedAt": 1768983761705,
+      "id": 14
+    },
+    {
+      "name": "Shrugs",
+      "category": "Schulter",
+      "focus": "Vordere Schulter",
+      "createdAt": 1768983789738,
+      "updatedAt": 1768983789738,
+      "id": 15
+    },
+    {
+      "name": "Kniebeugen",
+      "category": "Beine",
+      "focus": "Beine-komplett",
+      "createdAt": 1768983807471,
+      "updatedAt": 1768983807471,
+      "id": 16
+    },
+    {
+      "name": "Beinstrecker",
+      "category": "Beine",
+      "focus": "Quadrizeps",
+      "createdAt": 1768983821505,
+      "updatedAt": 1768983821505,
+      "id": 17
+    },
+    {
+      "name": "Beinbeuger",
+      "category": "Beine",
+      "focus": "Beinbizeps",
+      "createdAt": 1768983845638,
+      "updatedAt": 1768983845638,
+      "id": 18
+    },
+    {
+      "name": "Kickbacks",
+      "category": "Beine",
+      "focus": "Gesäß",
+      "createdAt": 1768983860771,
+      "updatedAt": 1768983860771,
+      "id": 19
+    },
+    {
+      "name": "Ausfallschritte",
+      "category": "Beine",
+      "focus": "Beine-komplett",
+      "createdAt": 1768983875871,
+      "updatedAt": 1768983875871,
+      "id": 20
+    },
+    {
+      "name": "Wadenheben",
+      "category": "Beine",
+      "focus": "Waden",
+      "createdAt": 1768983888138,
+      "updatedAt": 1768983888138,
+      "id": 21
+    },
+    {
+      "name": "Plank",
+      "category": "Bauch",
+      "focus": "Core",
+      "createdAt": 1768983904505,
+      "updatedAt": 1768983904505,
+      "id": 22
+    }
+  ],
+  "exerciseDays": [
+    {
+      "name": "PUSH-1",
+      "category": "push",
+      "exercises": [
+        {
+          "exerciseId": 1,
+          "numberOfSets": 3,
+          "position": 0
+        },
+        {
+          "exerciseId": 2,
+          "numberOfSets": 3,
+          "position": 1
+        },
+        {
+          "exerciseId": 3,
+          "numberOfSets": 3,
+          "position": 2
+        },
+        {
+          "exerciseId": 4,
+          "numberOfSets": 3,
+          "position": 3
+        },
+        {
+          "exerciseId": 5,
+          "numberOfSets": 3,
+          "position": 4
+        },
+        {
+          "exerciseId": 6,
+          "numberOfSets": 3,
+          "position": 5
+        },
+        {
+          "exerciseId": 7,
+          "numberOfSets": 3,
+          "position": 6
+        },
+        {
+          "exerciseId": 8,
+          "numberOfSets": 3,
+          "position": 7
+        }
+      ],
+      "rotationOrder": 0,
+      "createdAt": 1768984209392,
+      "updatedAt": 1768984209392,
+      "id": 1
+    },
+    {
+      "name": "PULL-1",
+      "category": "pull",
+      "exercises": [
+        {
+          "exerciseId": 9,
+          "numberOfSets": 4,
+          "position": 0
+        },
+        {
+          "exerciseId": 11,
+          "numberOfSets": 4,
+          "position": 1
+        },
+        {
+          "exerciseId": 10,
+          "numberOfSets": 3,
+          "position": 2
+        },
+        {
+          "exerciseId": 12,
+          "numberOfSets": 3,
+          "position": 3
+        },
+        {
+          "exerciseId": 13,
+          "numberOfSets": 3,
+          "position": 4
+        },
+        {
+          "exerciseId": 14,
+          "numberOfSets": 3,
+          "position": 5
+        },
+        {
+          "exerciseId": 15,
+          "numberOfSets": 3,
+          "position": 6
+        },
+        {
+          "exerciseId": 8,
+          "numberOfSets": 3,
+          "position": 7
+        }
+      ],
+      "rotationOrder": 1,
+      "createdAt": 1768984287706,
+      "updatedAt": 1768984287706,
+      "id": 2
+    },
+    {
+      "name": "BEINE-1",
+      "category": "legs",
+      "exercises": [
+        {
+          "exerciseId": 16,
+          "numberOfSets": 4,
+          "position": 0
+        },
+        {
+          "exerciseId": 17,
+          "numberOfSets": 3,
+          "position": 1
+        },
+        {
+          "exerciseId": 18,
+          "numberOfSets": 3,
+          "position": 2
+        },
+        {
+          "exerciseId": 19,
+          "numberOfSets": 3,
+          "position": 3
+        },
+        {
+          "exerciseId": 20,
+          "numberOfSets": 3,
+          "position": 4
+        },
+        {
+          "exerciseId": 21,
+          "numberOfSets": 3,
+          "position": 5
+        },
+        {
+          "exerciseId": 22,
+          "numberOfSets": 3,
+          "position": 6
+        },
+        {
+          "exerciseId": 8,
+          "numberOfSets": 3,
+          "position": 7
+        }
+      ],
+      "rotationOrder": 2,
+      "createdAt": 1768984351076,
+      "updatedAt": 1768984351076,
+      "id": 3
+    }
+  ],
+  "trainings": [
+    {
+      "exerciseDayId": 1,
+      "date": 1769010322817,
+      "sets": [
+        {
+          "exerciseId": 1,
+          "setNumber": 1,
+          "weight": 50,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 1,
+          "setNumber": 2,
+          "weight": 50,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 1,
+          "setNumber": 3,
+          "weight": 50,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 2,
+          "setNumber": 1,
+          "weight": 30,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 2,
+          "setNumber": 2,
+          "weight": 30,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 2,
+          "setNumber": 3,
+          "weight": 30,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 3,
+          "setNumber": 1,
+          "weight": 9,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 3,
+          "setNumber": 2,
+          "weight": 9,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 3,
+          "setNumber": 3,
+          "weight": 9,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 4,
+          "setNumber": 1,
+          "weight": 20,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 4,
+          "setNumber": 2,
+          "weight": 20,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 4,
+          "setNumber": 3,
+          "weight": 20,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 5,
+          "setNumber": 1,
+          "weight": 10,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 5,
+          "setNumber": 2,
+          "weight": 10,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 5,
+          "setNumber": 3,
+          "weight": 10,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 6,
+          "setNumber": 1,
+          "weight": 18,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 6,
+          "setNumber": 2,
+          "weight": 18,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 6,
+          "setNumber": 3,
+          "weight": 18,
+          "repetitions": 6,
+          "skipped": false
+        },
+        {
+          "exerciseId": 7,
+          "setNumber": 1,
+          "weight": 18,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 7,
+          "setNumber": 2,
+          "weight": 18,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 7,
+          "setNumber": 3,
+          "weight": 18,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 1,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 2,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 3,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        }
+      ],
+      "totalVolume": 3620,
+      "completed": true,
+      "id": 4
+    },
+    {
+      "exerciseDayId": 2,
+      "date": 1769099807540,
+      "sets": [
+        {
+          "exerciseId": 9,
+          "setNumber": 1,
+          "weight": 36,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 9,
+          "setNumber": 2,
+          "weight": 41,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 9,
+          "setNumber": 3,
+          "weight": 41,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 9,
+          "setNumber": 4,
+          "weight": 41,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 11,
+          "setNumber": 1,
+          "weight": 41,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 11,
+          "setNumber": 2,
+          "weight": 41,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 11,
+          "setNumber": 3,
+          "weight": 41,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 11,
+          "setNumber": 4,
+          "weight": 41,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 10,
+          "setNumber": 1,
+          "weight": 41,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 10,
+          "setNumber": 2,
+          "weight": 41,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 10,
+          "setNumber": 3,
+          "weight": 41,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 12,
+          "setNumber": 1,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 12,
+          "setNumber": 2,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 12,
+          "setNumber": 3,
+          "weight": 23,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 13,
+          "setNumber": 1,
+          "weight": 23,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 13,
+          "setNumber": 2,
+          "weight": 18,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 13,
+          "setNumber": 3,
+          "weight": 18,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 14,
+          "setNumber": 1,
+          "weight": 18,
+          "repetitions": 3,
+          "skipped": false
+        },
+        {
+          "exerciseId": 14,
+          "setNumber": 2,
+          "weight": 18,
+          "repetitions": 10,
+          "skipped": false
+        },
+        {
+          "exerciseId": 14,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 15,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 15,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 15,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        }
+      ],
+      "totalVolume": 5282,
+      "completed": true,
+      "id": 5
+    },
+    {
+      "exerciseDayId": 3,
+      "date": 1769266176916,
+      "sets": [
+        {
+          "exerciseId": 16,
+          "setNumber": 1,
+          "weight": 20,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 16,
+          "setNumber": 2,
+          "weight": 20,
+          "repetitions": 8,
+          "skipped": false
+        },
+        {
+          "exerciseId": 16,
+          "setNumber": 3,
+          "weight": 20,
+          "repetitions": 4,
+          "skipped": false
+        },
+        {
+          "exerciseId": 16,
+          "setNumber": 4,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 17,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 17,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 17,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 18,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 18,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 18,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 19,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 19,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 19,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 20,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 20,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 20,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 21,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 21,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 21,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 22,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 22,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 22,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 1,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 2,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        },
+        {
+          "exerciseId": 8,
+          "setNumber": 3,
+          "weight": null,
+          "repetitions": null,
+          "skipped": false
+        }
+      ],
+      "totalVolume": 400,
+      "completed": true,
+      "id": 6
+    }
+  ],
+  "settings": {
+    "lastExerciseDayId": null,
+    "theme": "dark",
+    "id": 1
+  }
+}

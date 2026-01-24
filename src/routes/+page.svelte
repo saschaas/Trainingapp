@@ -6,6 +6,7 @@
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import ExerciseCard from '$lib/components/training/ExerciseCard.svelte';
 	import VolumeDisplay from '$lib/components/training/VolumeDisplay.svelte';
+	import HistoryOverview from '$lib/components/history/HistoryOverview.svelte';
 	import Modal from '$lib/components/shared/Modal.svelte';
 	import Button from '$lib/components/shared/Button.svelte';
 
@@ -15,7 +16,7 @@
 	import { currentTraining, currentVolume, completionPercentage } from '$lib/stores/currentTraining';
 	import { ui, type TabId, categoryToTab } from '$lib/stores/ui';
 
-	import { getNextExerciseDay, getLastTrainedDays } from '$lib/utils/rotation';
+	import { getNextCategory, getLastTrainedDays } from '$lib/utils/rotation';
 	import { calculateAverageVolume } from '$lib/utils/volume';
 
 	import type { ExerciseDay, SetData } from '$lib/types';
@@ -32,7 +33,7 @@
 	// Get exercise day for current tab
 	let currentExerciseDay = $derived(() => {
 		const tab = $ui.activeTab;
-		if (tab === 'statistics') return null;
+		if (tab === 'statistics' || tab === 'history') return null;
 
 		const category = tab === 'push' ? 'push' : tab === 'pull' ? 'pull' : 'legs';
 		const daysForCategory = $exerciseDaysByCategory.get(category);
@@ -65,15 +66,22 @@
 		}
 	});
 
-	// Initialize: select next exercise day in rotation
+	// Initialize: select next exercise day in rotation based on PUSH → PULL → LEGS cycle
 	onMount(async () => {
 		const lastTraining = await trainingHistory.getLast();
-		const nextDay = getNextExerciseDay($exerciseDays, lastTraining || null);
 
-		if (nextDay) {
-			const tab = categoryToTab(nextDay.category);
-			ui.setActiveTab(tab);
+		let lastCategory: 'push' | 'pull' | 'legs' | null = null;
+		if (lastTraining) {
+			// Get the exercise day to find its category
+			const lastExerciseDay = await exerciseDays.getById(lastTraining.exerciseDayId);
+			if (lastExerciseDay && lastExerciseDay.category !== 'full-body') {
+				lastCategory = lastExerciseDay.category as 'push' | 'pull' | 'legs';
+			}
 		}
+
+		// Get next category in the cycle: PUSH → PULL → LEGS → PUSH...
+		const nextCategory = getNextCategory(lastCategory);
+		ui.setActiveTab(nextCategory);
 
 		initialized = true;
 	});
@@ -85,6 +93,9 @@
 		}
 		ui.setActiveTab(tab);
 	}
+
+	// Check if we're on the history tab
+	let isHistoryTab = $derived($ui.activeTab === 'history');
 
 	function handleUpdateSet(exerciseId: number, setNumber: number, updates: Partial<SetData>) {
 		currentTraining.updateSet(exerciseId, setNumber, updates);
@@ -110,12 +121,14 @@
 		showSaveConfirm = false;
 		await currentTraining.complete();
 
-		// Start next training
+		// Switch to next category in the cycle: PUSH → PULL → LEGS → PUSH...
 		const lastTraining = await trainingHistory.getLast();
-		const nextDay = getNextExerciseDay($exerciseDays, lastTraining || null);
-		if (nextDay) {
-			const tab = categoryToTab(nextDay.category);
-			ui.setActiveTab(tab);
+		if (lastTraining) {
+			const lastExerciseDay = await exerciseDays.getById(lastTraining.exerciseDayId);
+			if (lastExerciseDay && lastExerciseDay.category !== 'full-body') {
+				const nextCategory = getNextCategory(lastExerciseDay.category as 'push' | 'pull' | 'legs');
+				ui.setActiveTab(nextCategory);
+			}
 		}
 	}
 
@@ -146,6 +159,8 @@
 		<div class="loading">
 			<p>Lädt...</p>
 		</div>
+	{:else if isHistoryTab}
+		<HistoryOverview />
 	{:else if !currentExerciseDay()}
 		<div class="empty-state">
 			<p>Kein Trainingstag für diese Kategorie vorhanden.</p>
@@ -185,7 +200,7 @@
 	{/if}
 </main>
 
-{#if currentExerciseDay()}
+{#if currentExerciseDay() && !isHistoryTab}
 	<Footer
 		onSave={() => showSaveConfirm = true}
 		onReset={() => showResetConfirm = true}

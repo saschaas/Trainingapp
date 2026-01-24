@@ -40,6 +40,9 @@ function createTrainingHistoryStore() {
 		remove: async (id: number) => {
 			return trainingDb.deleteTraining(id);
 		},
+		update: async (id: number, updates: Partial<Omit<Training, 'id'>>) => {
+			return trainingDb.updateTraining(id, updates);
+		},
 		getCount: async () => {
 			return trainingDb.getTrainingCount();
 		}

@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import type { ExerciseDayCategory } from '$lib/types';
 
-export type TabId = 'push' | 'pull' | 'legs' | 'statistics';
+export type TabId = 'push' | 'pull' | 'legs' | 'statistics' | 'history';
 
 interface UIState {
 	activeTab: TabId;

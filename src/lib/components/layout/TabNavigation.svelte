@@ -12,6 +12,7 @@
 		{ id: 'push', label: 'PUSH', color: 'var(--color-push)' },
 		{ id: 'pull', label: 'PULL', color: 'var(--color-pull)' },
 		{ id: 'legs', label: 'BEINE', color: 'var(--color-legs)' },
+		{ id: 'history', label: 'HISTORIE', color: 'var(--color-warning)' },
 		{ id: 'statistics', label: 'STATISTIK', color: 'var(--color-primary)' }
 	];
 </script>
