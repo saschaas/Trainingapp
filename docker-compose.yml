@@ -1,0 +1,7 @@
+services:
+  fittrack:
+    build: .
+    container_name: fittrack
+    ports:
+      - "8080:80"
+    restart: unless-stopped

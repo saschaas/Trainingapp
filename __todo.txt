@@ -13,3 +13,16 @@ For the Historie tab displaying the last Workouts, can you make this use the ava
 -->DONE
 ---------------------------------------------------------------------------
 
+
+Can you update the small indication at the top of the page (see: Screenshot.jpg) that Shows the last Training days and how Long ago they were, so that the Icons Show the following icons:
+For:
+- PUSH (currently: P) -> PUSH,
+- PULL (currently: Z) ->  PULL,
+- BEINE (currently: B) ->  LEGS.
+Make sure to adjust the Icon size accoringly.
+
+
+Can you prepare the app for the production Environment? Please put everything into a docker container and write a small Install Readme file to instruct on how to put this on a Debian Server.
+Make sure all dependencies will be installed and the app can be Access from everywhere in the LAN.
+
+ 
