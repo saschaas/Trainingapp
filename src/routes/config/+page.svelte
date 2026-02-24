@@ -1,9 +1,44 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/shared/Button.svelte';
 	import Modal from '$lib/components/shared/Modal.svelte';
 	import { downloadBackup, readBackupFile, validateBackup, importDataReplace, importDataMerge, type BackupData } from '$lib/utils/backup';
+	import { getSettings, updateSettings } from '$lib/db';
+	import { playChime } from '$lib/stores/restTimer';
 
 	let showImportModal = $state(false);
+	let restTimerDuration = $state(120);
+	let restTimerVolume = $state(5);
+
+	const presets = [60, 90, 120, 180, 300];
+
+	function formatDuration(seconds: number): string {
+		if (seconds % 60 === 0) return `${seconds / 60} min`;
+		const m = Math.floor(seconds / 60);
+		const s = seconds % 60;
+		return `${m}:${s.toString().padStart(2, '0')}`;
+	}
+
+	async function setDuration(value: number) {
+		restTimerDuration = Math.max(15, value);
+		await updateSettings({ restTimerDuration });
+	}
+
+	async function setVolume(value: number) {
+		restTimerVolume = Math.max(0, Math.min(30, value));
+		await updateSettings({ restTimerVolume });
+		playChime(restTimerVolume);
+	}
+
+	onMount(async () => {
+		const settings = await getSettings();
+		if (settings?.restTimerDuration) {
+			restTimerDuration = settings.restTimerDuration;
+		}
+		if (settings?.restTimerVolume !== undefined) {
+			restTimerVolume = settings.restTimerVolume;
+		}
+	});
 	let importMode = $state<'replace' | 'merge'>('merge');
 	let selectedFile = $state<File | null>(null);
 	let importError = $state('');
@@ -132,6 +167,92 @@
 						<polyline points="9 18 15 12 9 6"></polyline>
 					</svg>
 				</a>
+			</div>
+		</section>
+
+		<section class="config-section">
+			<h2>Pausentimer</h2>
+			<div class="timer-setting">
+				<div class="timer-row">
+					<div class="timer-icon">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="13" r="8"></circle>
+							<path d="M12 9v4l2 2"></path>
+							<path d="M5 3L2 6"></path>
+							<path d="M22 6l-3-3"></path>
+							<line x1="12" y1="1" x2="12" y2="3"></line>
+							<line x1="10" y1="1" x2="14" y2="1"></line>
+						</svg>
+					</div>
+					<div class="timer-info">
+						<span class="timer-label">Pausendauer</span>
+						<span class="timer-desc">Zeit zwischen Sätzen</span>
+					</div>
+					<div class="timer-stepper">
+						<button class="stepper-btn" onclick={() => setDuration(restTimerDuration - 15)} disabled={restTimerDuration <= 15}>
+							&minus;
+						</button>
+						<span class="stepper-value">{formatDuration(restTimerDuration)}</span>
+						<button class="stepper-btn" onclick={() => setDuration(restTimerDuration + 15)}>
+							+
+						</button>
+					</div>
+				</div>
+				<div class="timer-presets">
+					{#each presets as preset}
+						<button
+							class="preset-btn"
+							class:active={restTimerDuration === preset}
+							onclick={() => setDuration(preset)}
+						>
+							{formatDuration(preset)}
+						</button>
+					{/each}
+				</div>
+
+				<div class="timer-divider"></div>
+
+				<div class="timer-row">
+					<div class="timer-icon">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							{#if restTimerVolume === 0}
+								<path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+								<line x1="23" y1="9" x2="17" y2="15"></line>
+								<line x1="17" y1="9" x2="23" y2="15"></line>
+							{:else if restTimerVolume <= 4}
+								<path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+								<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+							{:else}
+								<path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+								<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+								<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+							{/if}
+						</svg>
+					</div>
+					<div class="timer-info">
+						<span class="timer-label">Lautstärke</span>
+						<span class="timer-desc">{restTimerVolume === 0 ? 'Stumm' : `Stufe ${restTimerVolume}`}</span>
+					</div>
+					<div class="timer-stepper">
+						<button class="stepper-btn" onclick={() => setVolume(restTimerVolume - 1)} disabled={restTimerVolume <= 0}>
+							&minus;
+						</button>
+						<span class="stepper-value">{restTimerVolume}</span>
+						<button class="stepper-btn" onclick={() => setVolume(restTimerVolume + 1)} disabled={restTimerVolume >= 30}>
+							+
+						</button>
+					</div>
+				</div>
+
+				<input
+					type="range"
+					min="0"
+					max="30"
+					step="1"
+					value={restTimerVolume}
+					oninput={(e) => setVolume(parseInt(e.currentTarget.value))}
+					class="volume-slider"
+				/>
 			</div>
 		</section>
 
@@ -312,6 +433,148 @@
 
 	.link-arrow {
 		color: var(--color-text-muted);
+	}
+
+	.timer-setting {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 12px;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.timer-row {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.timer-icon {
+		color: var(--color-primary);
+		flex-shrink: 0;
+	}
+
+	.timer-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+	}
+
+	.timer-label {
+		font-weight: 500;
+		color: var(--color-text);
+	}
+
+	.timer-desc {
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	.timer-stepper {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.stepper-btn {
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface-dark);
+		color: var(--color-text);
+		font-size: 1.1rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.15s ease;
+	}
+
+	.stepper-btn:hover:not(:disabled) {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.stepper-btn:disabled {
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+
+	.stepper-value {
+		min-width: 3.5rem;
+		text-align: center;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-text);
+	}
+
+	.timer-presets {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.preset-btn {
+		padding: 0.35rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface-dark);
+		color: var(--color-text-secondary);
+		font-size: 0.8rem;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.preset-btn:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.preset-btn.active {
+		background: var(--color-primary);
+		border-color: var(--color-primary);
+		color: #fff;
+	}
+
+	.timer-divider {
+		height: 1px;
+		background: var(--color-border);
+	}
+
+	.volume-slider {
+		width: 100%;
+		height: 6px;
+		-webkit-appearance: none;
+		appearance: none;
+		background: var(--color-surface-dark);
+		border-radius: 3px;
+		outline: none;
+		cursor: pointer;
+	}
+
+	.volume-slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: var(--color-primary);
+		cursor: pointer;
+		border: 2px solid var(--color-surface);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.volume-slider::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: var(--color-primary);
+		cursor: pointer;
+		border: 2px solid var(--color-surface);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 	}
 
 	.backup-actions {

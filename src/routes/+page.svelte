@@ -9,6 +9,7 @@
 	import HistoryOverview from '$lib/components/history/HistoryOverview.svelte';
 	import Modal from '$lib/components/shared/Modal.svelte';
 	import Button from '$lib/components/shared/Button.svelte';
+	import RestTimerDisplay from '$lib/components/training/RestTimerDisplay.svelte';
 
 	import { exercises, exercisesById } from '$lib/stores/exercises';
 	import { exerciseDays, exerciseDaysByCategory } from '$lib/stores/exerciseDays';
@@ -16,6 +17,7 @@
 	import { currentTraining, currentVolume, completionPercentage } from '$lib/stores/currentTraining';
 	import { ui, type TabId, categoryToTab } from '$lib/stores/ui';
 
+	import { restTimer } from '$lib/stores/restTimer';
 	import { getNextCategory, getLastTrainedDays } from '$lib/utils/rotation';
 	import { calculateAverageVolume } from '$lib/utils/volume';
 
@@ -119,6 +121,7 @@
 
 	async function handleSave() {
 		showSaveConfirm = false;
+		restTimer.dismiss();
 		await currentTraining.complete();
 
 		// Switch to next category in the cycle: PUSH → PULL → LEGS → PUSH...
@@ -134,6 +137,7 @@
 
 	function handleReset() {
 		showResetConfirm = false;
+		restTimer.dismiss();
 		currentTraining.reset();
 	}
 
@@ -201,6 +205,7 @@
 </main>
 
 {#if currentExerciseDay() && !isHistoryTab}
+	<RestTimerDisplay />
 	<Footer
 		onSave={() => showSaveConfirm = true}
 		onReset={() => showResetConfirm = true}

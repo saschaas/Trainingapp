@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { SetData, SetAverage } from '$lib/types';
+	import { restTimer, warmUpAudio } from '$lib/stores/restTimer';
+	import { getSettings } from '$lib/db';
 
 	interface Props {
 		setData: SetData;
@@ -35,13 +37,26 @@
 		onUpdate({ repetitions: value });
 	}
 
-	function handleKeyDown(e: KeyboardEvent, isWeight: boolean) {
+	async function handleKeyDown(e: KeyboardEvent, isWeight: boolean) {
 		if (e.key === 'Tab' && !e.shiftKey) {
 			e.preventDefault();
 			const nextId = isWeight ? repsInputId : nextInputId;
 			if (nextId) {
 				const nextInput = document.getElementById(nextId);
 				nextInput?.focus();
+			}
+
+			// Start rest timer when tabbing from reps field with both values filled
+			if (!isWeight) {
+				const weightEl = document.getElementById(weightInputId) as HTMLInputElement | null;
+				const repsEl = document.getElementById(repsInputId) as HTMLInputElement | null;
+				if (weightEl?.value && repsEl?.value) {
+					// Unlock AudioContext now (user gesture) so sound works when timer ends later
+					warmUpAudio();
+					const settings = await getSettings();
+					const duration = settings?.restTimerDuration ?? 120;
+					restTimer.start(duration);
+				}
 			}
 		}
 	}

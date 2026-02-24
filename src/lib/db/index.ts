@@ -17,6 +17,28 @@ class FitnessDB extends Dexie {
 			trainings: '++id, exerciseDayId, date, completed',
 			settings: '++id'
 		});
+
+		this.version(2).stores({
+			exercises: '++id, name, category, createdAt',
+			exerciseDays: '++id, name, category, rotationOrder, createdAt',
+			trainings: '++id, exerciseDayId, date, completed',
+			settings: '++id'
+		}).upgrade(tx => {
+			return tx.table('settings').toCollection().modify(settings => {
+				settings.restTimerDuration = 120;
+			});
+		});
+
+		this.version(3).stores({
+			exercises: '++id, name, category, createdAt',
+			exerciseDays: '++id, name, category, rotationOrder, createdAt',
+			trainings: '++id, exerciseDayId, date, completed',
+			settings: '++id'
+		}).upgrade(tx => {
+			return tx.table('settings').toCollection().modify(settings => {
+				settings.restTimerVolume = 5;
+			});
+		});
 	}
 }
 
@@ -31,7 +53,9 @@ export async function initializeSettings(): Promise<AppSettings> {
 
 	const defaultSettings: AppSettings = {
 		lastExerciseDayId: null,
-		theme: 'dark'
+		theme: 'dark',
+		restTimerDuration: 120,
+		restTimerVolume: 5
 	};
 
 	const id = await db.settings.add(defaultSettings);

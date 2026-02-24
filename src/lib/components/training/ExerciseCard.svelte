@@ -2,6 +2,7 @@
 	import SetInput from './SetInput.svelte';
 	import QuickFillButtons from './QuickFillButtons.svelte';
 	import ExerciseProgressBar from './ExerciseProgressBar.svelte';
+	import ExerciseSparkline from './ExerciseSparkline.svelte';
 	import type { Exercise, SetData, SetAverage, Training } from '$lib/types';
 	import { calculateExerciseVolume } from '$lib/utils/volume';
 	import { calculateSetAverages, getLastTrainingSets, calculateExerciseAverage } from '$lib/utils/averages';
@@ -73,7 +74,10 @@
 <div class="exercise-card">
 	<div class="card-header">
 		<div class="exercise-info">
-			<h3 class="exercise-name">{exercise.name}</h3>
+			<div class="exercise-name-row">
+				<h3 class="exercise-name">{exercise.name}</h3>
+				<ExerciseSparkline {trainings} exerciseId={exercise.id!} />
+			</div>
 			<span class="exercise-focus">{exercise.focus}</span>
 		</div>
 		<QuickFillButtons
@@ -128,6 +132,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.125rem;
+	}
+
+	.exercise-name-row {
+		display: flex;
+		align-items: center;
+		gap: calc(0.5rem + 60px);
 	}
 
 	.exercise-name {

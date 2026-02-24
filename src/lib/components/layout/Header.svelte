@@ -9,10 +9,10 @@
 
 	function getCategoryBadge(category: string): string {
 		switch (category) {
-			case 'push': return 'P';
-			case 'pull': return 'Z'; // Ziehen
-			case 'legs': return 'B';
-			case 'full-body': return 'G';
+			case 'push': return 'PUSH';
+			case 'pull': return 'PULL';
+			case 'legs': return 'LEGS';
+			case 'full-body': return 'FULL';
 			default: return '?';
 		}
 	}
@@ -115,15 +115,16 @@
 	}
 
 	.day-badge {
-		width: 24px;
-		height: 24px;
+		padding: 0.15rem 0.35rem;
 		border-radius: 4px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.75rem;
+		font-size: 0.55rem;
 		font-weight: 700;
 		color: white;
+		letter-spacing: 0.03em;
+		white-space: nowrap;
 	}
 
 	.days-ago {

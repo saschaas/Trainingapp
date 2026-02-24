@@ -56,6 +56,8 @@ export interface AppSettings {
 	id?: number;
 	lastExerciseDayId: number | null;
 	theme: 'dark' | 'light';
+	restTimerDuration: number;
+	restTimerVolume: number;
 }
 
 // For current training state

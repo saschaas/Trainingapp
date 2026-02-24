@@ -97,12 +97,19 @@ export function getLastTrainedDays(
 		if (!seen.has(dayId)) {
 			const day = dayMap.get(dayId);
 			if (day) {
-				const daysAgo = Math.floor((now - training.date) / (1000 * 60 * 60 * 24));
+				const today = new Date(now);
+				today.setHours(0, 0, 0, 0);
+				const trainDate = new Date(training.date);
+				trainDate.setHours(0, 0, 0, 0);
+				const daysAgo = Math.round((today.getTime() - trainDate.getTime()) / (1000 * 60 * 60 * 24));
 				result.push({ exerciseDay: day, daysAgo });
 				seen.add(dayId);
 			}
 		}
 	}
+
+	// Sort by daysAgo descending (longest ago first)
+	result.sort((a, b) => b.daysAgo - a.daysAgo);
 
 	return result;
 }
@@ -129,7 +136,9 @@ export function getDaysSinceLastTraining(
 	const lastTraining = trainings.find(t => t.exerciseDayId === exerciseDayId);
 	if (!lastTraining) return null;
 
-	const now = Date.now();
-	const diffMs = now - lastTraining.date;
-	return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	const trainDate = new Date(lastTraining.date);
+	trainDate.setHours(0, 0, 0, 0);
+	return Math.round((today.getTime() - trainDate.getTime()) / (1000 * 60 * 60 * 24));
 }
