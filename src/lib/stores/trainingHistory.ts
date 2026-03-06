@@ -2,6 +2,7 @@ import { writable, derived } from 'svelte/store';
 import { liveQuery } from 'dexie';
 import { db } from '$lib/db';
 import * as trainingDb from '$lib/db/trainings';
+import { syncToServer } from '$lib/utils/sync';
 import type { Training } from '$lib/types';
 
 // Create a store that syncs with the database using liveQuery
@@ -20,7 +21,10 @@ function createTrainingHistoryStore() {
 	return {
 		subscribe,
 		add: async (exerciseDayId: number, sets: Training['sets'], totalVolume: number) => {
-			return trainingDb.createTraining(exerciseDayId, sets, totalVolume);
+			const id = await trainingDb.createTraining(exerciseDayId, sets, totalVolume);
+			// Sync all data to server in background (for Android app)
+			syncToServer().catch(err => console.warn('Server sync failed:', err));
+			return id;
 		},
 		getById: async (id: number) => {
 			return trainingDb.getTraining(id);

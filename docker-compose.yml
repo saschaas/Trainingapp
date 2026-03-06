@@ -4,4 +4,9 @@ services:
     container_name: fittrack
     ports:
       - "8080:80"
+    volumes:
+      - fittrack-data:/app/data
     restart: unless-stopped
+
+volumes:
+  fittrack-data:

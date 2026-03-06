@@ -2,13 +2,16 @@
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/shared/Button.svelte';
 	import Modal from '$lib/components/shared/Modal.svelte';
-	import { downloadBackup, readBackupFile, validateBackup, importDataReplace, importDataMerge, type BackupData } from '$lib/utils/backup';
+	import { downloadBackup, readBackupFile, validateBackup, importDataReplace, importDataMerge, exportData, type BackupData } from '$lib/utils/backup';
 	import { getSettings, updateSettings } from '$lib/db';
 	import { playChime } from '$lib/stores/restTimer';
 
 	let showImportModal = $state(false);
 	let restTimerDuration = $state(120);
 	let restTimerVolume = $state(5);
+	let isSyncing = $state(false);
+	let syncMessage = $state('');
+	let syncError = $state(false);
 
 	const presets = [60, 90, 120, 180, 300];
 
@@ -47,6 +50,39 @@
 
 	async function handleExport() {
 		await downloadBackup();
+	}
+
+	async function handleSyncToServer() {
+		isSyncing = true;
+		syncMessage = '';
+		syncError = false;
+
+		try {
+			const data = await exportData();
+			const response = await fetch('/api/import', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					exercises: data.exercises,
+					exerciseDays: data.exerciseDays,
+					trainings: data.trainings,
+					settings: data.settings
+				})
+			});
+
+			if (!response.ok) {
+				const err = await response.text();
+				throw new Error(err);
+			}
+
+			const result = await response.json();
+			syncMessage = `Sync erfolgreich: ${result.imported.exercises} Übungen, ${result.imported.exerciseDays} Trainingstage, ${result.imported.trainings} Trainings.`;
+		} catch (err) {
+			syncError = true;
+			syncMessage = err instanceof Error ? err.message : 'Sync fehlgeschlagen';
+		} finally {
+			isSyncing = false;
+		}
 	}
 
 	function handleFileSelect(e: Event) {
@@ -254,6 +290,26 @@
 					class="volume-slider"
 				/>
 			</div>
+		</section>
+
+		<section class="config-section">
+			<h2>Android Sync</h2>
+			<p class="sync-desc">Daten zum Server synchronisieren, damit die Android-App darauf zugreifen kann.</p>
+			<div class="backup-actions">
+				<Button variant="primary" onclick={handleSyncToServer} disabled={isSyncing}>
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="16 16 12 12 8 16"></polyline>
+						<line x1="12" y1="12" x2="12" y2="21"></line>
+						<path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+					</svg>
+					{isSyncing ? 'Synchronisiert...' : 'Zum Server synchronisieren'}
+				</Button>
+			</div>
+			{#if syncMessage}
+				<div class="import-message" class:error={syncError} class:success={!syncError}>
+					{syncMessage}
+				</div>
+			{/if}
 		</section>
 
 		<section class="config-section">
@@ -575,6 +631,12 @@
 		cursor: pointer;
 		border: 2px solid var(--color-surface);
 		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.sync-desc {
+		font-size: 0.8rem;
+		color: var(--color-text-secondary);
+		margin-bottom: 0.75rem;
 	}
 
 	.backup-actions {
